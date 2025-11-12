@@ -9,7 +9,7 @@ x-lockdown: &lockdown
 
 services:
   qbittorrent:
-    image: "11notes/qbittorrent:5.1.2"
+    image: "11notes/qbittorrent:5.1.3"
     <<: *lockdown
     environment:
       TZ: "Europe/Zurich"

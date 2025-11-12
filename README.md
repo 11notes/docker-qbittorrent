@@ -1,7 +1,7 @@
-![banner](https://github.com/11notes/defaults/blob/main/static/img/banner.png?raw=true)
+![banner](https://raw.githubusercontent.com/11notes/static/refs/heads/main/img/banner/README.png)
 
 # QBITTORRENT
-![size](https://img.shields.io/docker/image-size/11notes/qbittorrent/5.1.2?color=0eb305)![5px](https://github.com/11notes/defaults/blob/main/static/img/transparent5x2px.png?raw=true)![version](https://img.shields.io/docker/v/11notes/qbittorrent/5.1.2?color=eb7a09)![5px](https://github.com/11notes/defaults/blob/main/static/img/transparent5x2px.png?raw=true)![pulls](https://img.shields.io/docker/pulls/11notes/qbittorrent?color=2b75d6)![5px](https://github.com/11notes/defaults/blob/main/static/img/transparent5x2px.png?raw=true)[<img src="https://img.shields.io/github/issues/11notes/docker-QBITTORRENT?color=7842f5">](https://github.com/11notes/docker-QBITTORRENT/issues)![5px](https://github.com/11notes/defaults/blob/main/static/img/transparent5x2px.png?raw=true)![swiss_made](https://img.shields.io/badge/Swiss_Made-FFFFFF?labelColor=FF0000&logo=data:image/svg%2bxml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0idHJhbnNwYXJlbnQiLz4KICA8cGF0aCBkPSJtMTMgNmg2djdoN3Y2aC03djdoLTZ2LTdoLTd2LTZoN3oiIGZpbGw9IiNmZmYiLz4KPC9zdmc+)
+![size](https://img.shields.io/badge/image_size-27MB-green?color=%2338ad2d)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/main/img/markdown/transparent5x2px.png)![pulls](https://img.shields.io/docker/pulls/11notes/qbittorrent?color=2b75d6)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/main/img/markdown/transparent5x2px.png)[<img src="https://img.shields.io/github/issues/11notes/docker-qbittorrent?color=7842f5">](https://github.com/11notes/docker-qbittorrent/issues)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/main/img/markdown/transparent5x2px.png)![swiss_made](https://img.shields.io/badge/Swiss_Made-FFFFFF?labelColor=FF0000&logo=data:image/svg%2bxml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0idHJhbnNwYXJlbnQiLz4KICA8cGF0aCBkPSJtMTMgNmg2djdoN3Y2aC03djdoLTZ2LTdoLTd2LTZoN3oiIGZpbGw9IiNmZmYiLz4KPC9zdmc+)
 
 Run qBittorrent rootless and distroless.
 
@@ -44,10 +44,10 @@ Below you find a comparison between this image and the most used or original one
 
 | **image** | **size on disk** | **init default as** | **[distroless](https://github.com/11notes/RTFM/blob/main/linux/container/image/distroless.md)** | supported architectures
 | ---: | ---: | :---: | :---: | :---: |
-| 11notes/qbittorrent:5.1.2 | 27MB | 1000:1000 | ✅ | amd64, arm64, armv7 |
+| 11notes/qbittorrent | 27MB | 1000:1000 | ✅ | amd64, arm64, armv7 |
 | home-operations/qbittorrent | 111MB | 65534:65533 | ❌ | amd64, arm64 |
 | hotio/qbittorrent | 159MB | 0:0 | ❌ | amd64, arm64 |
-| qbittorrentofficial/qbittorrent-nox | 172MB | 0:0 | ❌ | 386, amd64, arm64, armv6, armv7, riscv64 |
+| qbittorrentofficial/qbittorrent-nox | 167MB | 0:0 | ❌ | 386, amd64, arm64, armv6, armv7, riscv64 |
 | linuxserver/qbittorrent | 198MB | 0:0 | ❌ | amd64, arm64 |
 
 # VOLUMES 📁
@@ -68,7 +68,7 @@ x-lockdown: &lockdown
 
 services:
   qbittorrent:
-    image: "11notes/qbittorrent:5.1.2"
+    image: "11notes/qbittorrent:5.1.3"
     <<: *lockdown
     environment:
       TZ: "Europe/Zurich"
@@ -92,7 +92,7 @@ volumes:
 networks:
   frontend:
 ```
-To find out how you can change the default UID/GID of this container image, consult the [how-to.changeUIDGID](https://github.com/11notes/RTFM/blob/main/linux/container/image/11notes/how-to.changeUIDGID.md#change-uidgid-the-correct-way) section of my [RTFM](https://github.com/11notes/RTFM)
+To find out how you can change the default UID/GID of this container image, consult the [RTFM](https://github.com/11notes/RTFM/blob/main/linux/container/image/11notes/how-to.changeUIDGID.md#change-uidgid-the-correct-way).
 
 # DEFAULT SETTINGS 🗃️
 | Parameter | Value | Description |
@@ -115,26 +115,26 @@ To find out how you can change the default UID/GID of this container image, cons
 # MAIN TAGS 🏷️
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
-* [5.1.2](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.2)
-* [5.1.2-unraid](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.2-unraid)
+* [5.1.3](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.3)
+* [5.1.3-unraid](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.3-unraid)
 
 ### There is no latest tag, what am I supposed to do about updates?
-It is of my opinion that the ```:latest``` tag is dangerous. Many times, I’ve introduced **breaking** changes to my images. This would have messed up everything for some people. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:5.1.2``` you can use ```:5``` or ```:5.1```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version.
+It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:5.1.3``` you can use ```:5``` or ```:5.1```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
 
 If you still insist on having the bleeding edge release of this app, simply use the ```:rolling``` tag, but be warned! You will get the latest version of the app instantly, regardless of breaking changes or security issues or what so ever. You do this at your own risk!
 
 # REGISTRIES ☁️
 ```
-docker pull 11notes/qbittorrent:5.1.2
-docker pull ghcr.io/11notes/qbittorrent:5.1.2
-docker pull quay.io/11notes/qbittorrent:5.1.2
+docker pull 11notes/qbittorrent:5.1.3
+docker pull ghcr.io/11notes/qbittorrent:5.1.3
+docker pull quay.io/11notes/qbittorrent:5.1.3
 ```
 
 # UNRAID VERSION 🟠
 This image supports unraid by default. Simply add **-unraid** to any tag and the image will run as 99:100 instead of 1000:1000 causing no issues on unraid. Enjoy.
 
 # SOURCE 💾
-* [11notes/qbittorrent](https://github.com/11notes/docker-QBITTORRENT)
+* [11notes/qbittorrent](https://github.com/11notes/docker-qbittorrent)
 
 # PARENT IMAGE 🏛️
 > [!IMPORTANT]
@@ -160,4 +160,4 @@ This image supports unraid by default. Simply add **-unraid** to any tag and the
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-qbittorrent/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-qbittorrent/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-qbittorrent/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 15.10.2025, 08:41:01 (CET)*
+*created 12.11.2025, 06:40:43 (CET)*
