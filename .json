@@ -3,7 +3,7 @@
   "name": "qbittorrent",
   "root": "/qbittorrent",
   "semver": {
-    "version": "5.1.2"
+    "version": "5.1.3"
   },
   "readme": {
     "description": "Run qBittorrent rootless and distroless.",
@@ -18,7 +18,12 @@
       ]
     },
     "comparison": {
-      "images": ["linuxserver/qbittorrent", "ghcr.io/hotio/qbittorrent", "ghcr.io/home-operations/qbittorrent:rolling", "qbittorrentofficial/qbittorrent-nox"]
+      "images": [
+        "linuxserver/qbittorrent",
+        "ghcr.io/hotio/qbittorrent",
+        "ghcr.io/home-operations/qbittorrent:rolling",
+        "qbittorrentofficial/qbittorrent-nox"
+      ]
     }
   }
 }
