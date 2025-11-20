@@ -44,11 +44,11 @@ Below you find a comparison between this image and the most used or original one
 
 | **image** | **size on disk** | **init default as** | **[distroless](https://github.com/11notes/RTFM/blob/main/linux/container/image/distroless.md)** | supported architectures
 | ---: | ---: | :---: | :---: | :---: |
-| 11notes/qbittorrent | 27MB | 1000:1000 | ✅ | amd64, arm64, armv7 |
+| 11notes/qbittorrent | 27MB | 1000:1000 | ✅ | amd64 |
 | home-operations/qbittorrent | 111MB | 65534:65533 | ❌ | amd64, arm64 |
 | hotio/qbittorrent | 159MB | 0:0 | ❌ | amd64, arm64 |
 | qbittorrentofficial/qbittorrent-nox | 167MB | 0:0 | ❌ | 386, amd64, arm64, armv6, armv7, riscv64 |
-| linuxserver/qbittorrent | 198MB | 0:0 | ❌ | amd64, arm64 |
+| linuxserver/qbittorrent | 503MB | 0:0 | ❌ | amd64, arm64 |
 
 # VOLUMES 📁
 * **/qbittorrent/etc** - Directory of your qBittorrent.conf and other files
@@ -68,7 +68,7 @@ x-lockdown: &lockdown
 
 services:
   qbittorrent:
-    image: "11notes/qbittorrent:5.1.3"
+    image: "11notes/qbittorrent:5.1.4"
     <<: *lockdown
     environment:
       TZ: "Europe/Zurich"
@@ -115,19 +115,19 @@ To find out how you can change the default UID/GID of this container image, cons
 # MAIN TAGS 🏷️
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
-* [5.1.3](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.3)
-* [5.1.3-unraid](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.3-unraid)
+* [5.1.4](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.4)
+* [5.1.4-unraid](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.4-unraid)
 
 ### There is no latest tag, what am I supposed to do about updates?
-It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:5.1.3``` you can use ```:5``` or ```:5.1```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
+It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:5.1.4``` you can use ```:5``` or ```:5.1```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
 
 If you still insist on having the bleeding edge release of this app, simply use the ```:rolling``` tag, but be warned! You will get the latest version of the app instantly, regardless of breaking changes or security issues or what so ever. You do this at your own risk!
 
 # REGISTRIES ☁️
 ```
-docker pull 11notes/qbittorrent:5.1.3
-docker pull ghcr.io/11notes/qbittorrent:5.1.3
-docker pull quay.io/11notes/qbittorrent:5.1.3
+docker pull 11notes/qbittorrent:5.1.4
+docker pull ghcr.io/11notes/qbittorrent:5.1.4
+docker pull quay.io/11notes/qbittorrent:5.1.4
 ```
 
 # UNRAID VERSION 🟠
@@ -160,4 +160,4 @@ This image supports unraid by default. Simply add **-unraid** to any tag and the
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-qbittorrent/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-qbittorrent/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-qbittorrent/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 12.11.2025, 06:40:43 (CET)*
+*created 20.11.2025, 06:38:22 (CET)*
