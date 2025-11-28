@@ -6,7 +6,7 @@
     "version": "5.1.4"
   },
   "readme": {
-    "description": "Run qBittorrent rootless and distroless.",
+    "description": "run qBittorrent rootless and distroless",
     "introduction": "[qBittorrent](https://github.com/qbittorrent/qBittorrent) (created by [qbittorrent](https://github.com/qbittorrent)) is a bittorrent client programmed in C++ / Qt that uses libtorrent (sometimes called libtorrent-rasterbar) by Arvid Norberg.",
     "built": {
       "qBittorrent": "https://github.com/qbittorrent/qBittorrent"
