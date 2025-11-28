@@ -148,6 +148,7 @@ jobs:
           git push --follow-tags
 
       - name: update / build container image
+        id: build
         if: env.WORKFLOW_UPDATE == 'true' && steps.checkout.outcome == 'success'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
         with:
@@ -158,7 +159,7 @@ jobs:
           ref: "v${{ env.LATEST_TAG }}"
 
       - name: update / build container image for unraid
-        if: env.WORKFLOW_UPDATE_UNRAID == 'true' && steps.checkout.outcome == 'success'
+        if: env.WORKFLOW_UPDATE_UNRAID == 'true' && steps.checkout.outcome == 'success' && steps.build.outcome == 'success'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
         with:
           workflow: docker.yml

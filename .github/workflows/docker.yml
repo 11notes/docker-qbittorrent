@@ -88,7 +88,7 @@ jobs:
             );
 
             const matrix = {include:[]};
-            if("${{ github.event.inputs.readme }}" === "true"){
+            if("${{ github.event.inputs.readme }}" === "true" && "${{ github.event.inputs.build }}" === "false"){
               matrix.include.push({platform:"amd64", runner:"ubuntu-24.04"});
             }else{
               for(const platform of platforms){
