@@ -36,6 +36,8 @@ This image is part of the so called arr-stack (apps to pirate and manage media c
 >* ... this image is automatically scanned for CVEs before and after publishing
 >* ... this image is created via a secure and pinned CI/CD process
 >* ... this image is very small
+>* ... this image creates a random password at start if none is set in the config
+>* ... this image support [inline configs](https://github.com/11notes/RTFM/blob/master/linux/container/image/11notes/inline-config.md)
 
 If you value security, simplicity and optimizations to the extreme, then this image might be for you.
 
@@ -45,10 +47,10 @@ Below you find a comparison between this image and the most used or original one
 | **image** | **size on disk** | **init default as** | **[distroless](https://github.com/11notes/RTFM/blob/main/linux/container/image/distroless.md)** | supported architectures
 | ---: | ---: | :---: | :---: | :---: |
 | 11notes/qbittorrent | 27MB | 1000:1000 | ✅ | amd64, arm64, armv7 |
-| home-operations/qbittorrent | 111MB | 65534:65533 | ❌ | amd64, arm64 |
-| hotio/qbittorrent | 159MB | 0:0 | ❌ | amd64, arm64 |
-| qbittorrentofficial/qbittorrent-nox | 167MB | 0:0 | ❌ | 386, amd64, arm64, armv6, armv7, riscv64 |
-| linuxserver/qbittorrent | 503MB | 0:0 | ❌ | amd64, arm64 |
+| home-operations/qbittorrent | 96MB | 65534:65533 | ❌ | amd64, arm64 |
+| hotio/qbittorrent | 154MB | 0:0 | ❌ | amd64, arm64 |
+| linuxserver/qbittorrent | 198MB | 0:0 | ❌ | amd64, arm64 |
+| qbittorrentofficial/qbittorrent-nox | 475MB | 0:0 | ❌ | 386, amd64, arm64, armv6, armv7, riscv64 |
 
 # VOLUMES 📁
 * **/qbittorrent/etc** - Directory of your qBittorrent.conf and other files
@@ -101,7 +103,6 @@ To find out how you can change the default UID/GID of this container image, cons
 | `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
 | `gid` | 1000 | [group identifier](https://en.wikipedia.org/wiki/Group_identifier) |
 | `home` | /qbittorrent | home directory of user docker |
-| `login` | admin // qbittorrent | login using default config |
 | `AdditionalTrackersURL` | [ngosang/trackerslist](https://raw.githubusercontent.com/ngosang/trackerslist/refs/heads/master/trackers_best.txt) | additional trackers that will be added to every torrent |
 
 # ENVIRONMENT 📝
@@ -111,12 +112,14 @@ To find out how you can change the default UID/GID of this container image, cons
 | `DEBUG` | Will activate debug option for container image and app (if available) | |
 | `QBITTORRENT_USER_AGENT` *(optional)* | sets the user-agent to a custom value if needed |  |
 | `QBITTORRENT_PEER_ID` *(optional)* | sets the peer ID to a custom value if needed |  |
+| `QBITTORRENT_CONFIG` *(optional)* | Will overwrite the default config with the value of this variable if set ([inline config](https://github.com/11notes/RTFM/blob/master/linux/container/image/11notes/inline-config.md)) | |
 
 # MAIN TAGS 🏷️
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
 * [5.1.4](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.4)
 * [5.1.4-unraid](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.4-unraid)
+* [5.1.4-nobody](https://hub.docker.com/r/11notes/qbittorrent/tags?name=5.1.4-nobody)
 
 ### There is no latest tag, what am I supposed to do about updates?
 It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:5.1.4``` you can use ```:5``` or ```:5.1```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
@@ -131,7 +134,10 @@ docker pull quay.io/11notes/qbittorrent:5.1.4
 ```
 
 # UNRAID VERSION 🟠
-This image supports unraid by default. Simply add **-unraid** to any tag and the image will run as 99:100 instead of 1000:1000 causing no issues on unraid. Enjoy.
+This image supports unraid by default. Simply add **-unraid** to any tag and the image will run as 99:100 instead of 1000:1000.
+
+# NOBODY VERSION 👻
+This image supports nobody by default. Simply add **-nobody** to any tag and the image will run as 65534:65534 instead of 1000:1000.
 
 # SOURCE 💾
 * [11notes/qbittorrent](https://github.com/11notes/docker-qbittorrent)
@@ -151,13 +157,9 @@ This image supports unraid by default. Simply add **-unraid** to any tag and the
 >* Use a reverse proxy like Traefik, Nginx, HAproxy to terminate TLS and to protect your endpoints
 >* Use Let’s Encrypt DNS-01 challenge to obtain valid SSL certificates for your services
 
-# CAUTION ⚠️
-> [!CAUTION]
->* If you use the image with the default configuration, please make sure to change the default web ui login account password or provide your own qBittorrent.conf!
-
 [^1]: Check the [compose.vpn.yml](https://github.com/11notes/docker-qbittorrent/blob/master/compose.vpn.yml) example on how to use this image with a VPN provider like gluetun.
 
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-qbittorrent/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-qbittorrent/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-qbittorrent/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 28.11.2025, 11:48:54 (CET)*
+*created 05.03.2026, 09:42:08 (CET)*
