@@ -35,6 +35,7 @@ ${{ content_defaults }}
 ${{ content_environment }}
 | `QBITTORRENT_USER_AGENT` *(optional)* | sets the user-agent to a custom value if needed |  |
 | `QBITTORRENT_PEER_ID` *(optional)* | sets the peer ID to a custom value if needed |  |
+| `QBITTORRENT_CONFIG` *(optional)* | Will overwrite the default config with the value of this variable if set ([inline config](https://github.com/11notes/RTFM/blob/master/linux/container/image/11notes/inline-config.md)) | |
 
 ${{ content_source }}
 
@@ -43,9 +44,5 @@ ${{ content_parent }}
 ${{ content_built }}
 
 ${{ content_tips }}
-
-${{ title_caution }}
-${{ github:> [!CAUTION] }}
-${{ github:> }}* If you use the image with the default configuration, please make sure to change the default web ui login account password or provide your own qBittorrent.conf!
 
 [^1]: Check the [compose.vpn.yml](https://github.com/11notes/docker-qbittorrent/blob/master/compose.vpn.yml) example on how to use this image with a VPN provider like gluetun.
