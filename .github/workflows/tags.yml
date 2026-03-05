@@ -4,24 +4,17 @@ on:
     tags:
       - 'v*'
 jobs:
-  image:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: build docker image
-        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        with:
-          workflow: docker.yml
-          wait-for-completion: false
-          token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "release":"true", "readme":"true", "run-name":"build ${{ github.ref_name }}" }'
+      - name: setup etc for org.build.yml
+        run: |
+          echo "WORKFLOW_ETC_BASE64JSON=$(echo '{"unraid":true, "nobody":true}' | base64 -w 0)" >> "${GITHUB_ENV}"
 
-  image-unraid:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build docker image for unraid
+      - name: build container images
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
         with:
-          workflow: docker.yml
+          workflow: org.build.yml
           wait-for-completion: false
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "release":"false", "readme":"false", "run-name":"build unraid ${{ github.ref_name }}", "etc":"eyJzZW12ZXJzdWZmaXgiOiJ1bnJhaWQiLCJ1aWQiOjk5LCJnaWQiOjEwMH0=" }'
+          inputs: '{ "ref":"${{ github.ref_name }}", "etc":"${{ env.WORKFLOW_ETC_BASE64JSON }}" }'
