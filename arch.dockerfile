@@ -9,7 +9,8 @@
       APP_BOOST_VERSION=1.89.0 \
       APP_ZLIB_VERSION=1.3.1 \
       APP_LIBTORRENT_VERSION=2.0.11 \
-      APP_VUETORRENT_VERSION=2.30.1
+      APP_VUETORRENT_VERSION=2.30.1 \
+      APP_GO_VERSION=0
 
 # :: FOREIGN IMAGES
   # https://github.com/11notes/docker-distroless/blob/master/arch.dockerfile
@@ -26,7 +27,16 @@
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
-# :: BUILD THE IMAGE
+# :: ENTRYPOINT
+  FROM 11notes/go:${APP_GO_VERSION} AS entrypoint
+  COPY ./build/entrypoint /go/entrypoint
+  RUN set -ex; \
+    cd /go/entrypoint; \
+    eleven go build /entrypoint main.go; \
+    eleven distroless /entrypoint;
+
+
+# :: QBITTORRENT
   FROM alpine AS build
   COPY --from=distroless-qt / /
   COPY --from=util-bin / /
@@ -196,6 +206,7 @@
   # :: multi-stage
     COPY --from=distroless / /
     COPY --from=distroless-localhealth / /
+    COPY --from=entrypoint /distroless/ /
     COPY --from=build /distroless/ /
     COPY --from=file-system --chown=${APP_UID}:${APP_GID} /distroless/ /
     COPY --from=vuetorrent --chown=${APP_UID}:${APP_GID} /distroless/ /
@@ -210,5 +221,4 @@
 
 # :: EXECUTE
   USER ${APP_UID}:${APP_GID}
-  ENTRYPOINT ["/usr/local/bin/qbittorrent"]
-  CMD ["--profile=/opt"]
+  ENTRYPOINT ["/usr/local/bin/entrypoint"]

@@ -1,0 +1,4 @@
+github.com/11notes/go-eleven v0.1.0 h1:edc4aTElUy9X9Y4L1mcn2fR2o94QMz0hfatgOxkMeVA=
+github.com/11notes/go-eleven v0.1.0/go.mod h1:QPTfZm5RIP7JTEZLRAlV9/cuzf0UWX2TT/jqi5gZpvI=
+golang.org/x/crypto v0.48.0 h1:/VRzVqiRSggnhY7gNRxPauEQ5Drw9haKdM0jqfcCFts=
+golang.org/x/crypto v0.48.0/go.mod h1:r0kV5h3qnFPlQnBSrULhlsRfryS2pmewsg+XfMgkVos=
