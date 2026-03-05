@@ -30,7 +30,6 @@ ${{ title_volumes }}
 ${{ content_compose }}
 
 ${{ content_defaults }}
-| `login` | admin // qbittorrent | login using default config |
 | `AdditionalTrackersURL` | [ngosang/trackerslist](https://raw.githubusercontent.com/ngosang/trackerslist/refs/heads/master/trackers_best.txt) | additional trackers that will be added to every torrent |
 
 ${{ content_environment }}
