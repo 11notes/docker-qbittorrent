@@ -5,7 +5,7 @@
   ARG APP_UID=1000 \
       APP_GID=1000 \
       QT_VERSION=6.9.2 \
-      APP_OPENSSL_VERSION=3.5.3 \
+      APP_OPENSSL_LTS_VERSION=0 \
       APP_BOOST_VERSION=1.89.0 \
       APP_ZLIB_VERSION=1.3.1 \
       APP_LIBTORRENT_VERSION=2.0.11 \
@@ -44,7 +44,7 @@
   ARG APP_VERSION \
       TARGETARCH \
       TARGETVARIANT \
-      APP_OPENSSL_VERSION \
+      APP_OPENSSL_LTS_VERSION \
       APP_BOOST_VERSION \
       APP_ZLIB_VERSION \
       APP_LIBTORRENT_VERSION
@@ -69,10 +69,10 @@
 
   # BUILD OPENSSL
   RUN set -ex; \
-    eleven github asset openssl/openssl openssl-${APP_OPENSSL_VERSION} openssl-${APP_OPENSSL_VERSION}.tar.gz;
+    eleven github asset openssl/openssl openssl-${APP_OPENSSL_LTS_VERSION} openssl-${APP_OPENSSL_LTS_VERSION}.tar.gz;
 
   RUN set -ex; \
-    cd /openssl-${APP_OPENSSL_VERSION}; \
+    cd /openssl-${APP_OPENSSL_LTS_VERSION}; \
     case "${TARGETARCH}${TARGETVARIANT}" in \
       "amd64"|"arm64") \
         ./Configure \
@@ -89,8 +89,8 @@
     esac; \
     make -s -j $(nproc) 2>&1 > /dev/null; \
     make -s -j $(nproc) install_sw 2>&1 > /dev/null; \
-    cp -af /openssl-${APP_OPENSSL_VERSION}/libssl.a /usr/lib; \
-    cp -af /openssl-${APP_OPENSSL_VERSION}/libcrypto.a /usr/lib;
+    cp -af /openssl-${APP_OPENSSL_LTS_VERSION}/libssl.a /usr/lib; \
+    cp -af /openssl-${APP_OPENSSL_LTS_VERSION}/libcrypto.a /usr/lib;
 
   # BUILD ZLIB
   RUN set -ex; \
