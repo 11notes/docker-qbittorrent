@@ -134,6 +134,7 @@ jobs:
       DOCKER_IMAGE_NAME_AND_VERSION: ${{ steps.setup-environment.outputs.DOCKER_IMAGE_NAME_AND_VERSION }}
       DOCKER_IMAGE_ARGUMENTS: ${{ steps.setup-environment.outputs.DOCKER_IMAGE_ARGUMENTS }}
       WORKFLOW_BUILD: ${{ steps.setup-environment.outputs.WORKFLOW_BUILD }}
+      WORKFLOW_BUILD_SUCCESS: ${{ steps.build-success.outputs.WORKFLOW_BUILD_SUCCESS }}
 
     timeout-minutes: 1440
 
@@ -533,6 +534,13 @@ jobs:
           path: ${{ runner.temp }}/digests/*
           if-no-files-found: error
 
+      # SET BUILD AS SUCCESSFULL
+      - name: container image / success
+        if: env.WORKFLOW_BUILD == 'true' && steps.image-push.outcome == 'success'
+        id: build-success
+        run: |
+          echo "WORKFLOW_BUILD_SUCCESS=true" >> $GITHUB_OUTPUT
+
 
       # ╔═════════════════════════════════════════════════════╗
       # ║               CREATE GITHUB RELEASE                 ║
@@ -707,7 +715,7 @@ jobs:
 
       # CREATE MAKRDOWN OF README.md
       - name: README.md / create
-        if: github.event.inputs.readme == 'true' && (steps.image-build.outcome == 'success' || inputs.run-name == 'readme')
+        if: github.event.inputs.readme == 'true' && (needs.docker.outputs.WORKFLOW_BUILD_SUCCESS == 'true' || github.event.inputs.run-name == 'readme')
         id: github-readme
         continue-on-error: true
         uses: 11notes/action-docker-readme@v1
