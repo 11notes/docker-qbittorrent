@@ -16,6 +16,9 @@ const APP_CONFIG string = "/qbittorrent/etc/qBittorrent.conf"
 const APP_DEFAULT_PASSWORD string = "@ByteArray(188J/h/wfAYQ9H+mTl/7lA==:j/+e2SwJUi9g+IPiEG2+Pix9W0IOv2c20QjrmBUhr4TBUXO3fcMv6leeU6qK8834xiq8fngh8ShwYDfYO0w6lg==)"
 
 func main(){
+	// fix improper shutdown lockfile issue
+	os.Remove("/qbittorrent/etc/lockfile")
+
 	// write env to file if set
 	eleven.Container.EnvToFile(APP_CONFIG_ENV, APP_CONFIG)
 
@@ -37,7 +40,5 @@ func main(){
 	}
 
 	// start qbittorrent and replace process with it
-	if err := syscall.Exec(APP_BIN, []string{"qbittorrent", "--profile=/opt"}, os.Environ()); err != nil {
-		os.Exit(1)
-	}
+	eleven.Container.Run("/usr/local/bin", "qbittorrent", []string{"--profile=/opt"})
 }
