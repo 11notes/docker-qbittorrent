@@ -3,7 +3,7 @@
   "name": "qbittorrent",
   "root": "/qbittorrent",
   "semver": {
-    "version": "5.2.0"
+    "version": "5.2.1"
   },
   "readme": {
     "description": "run qBittorrent rootless and distroless",
