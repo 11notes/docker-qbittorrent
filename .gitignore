@@ -3,4 +3,4 @@ maintain/
 node_modules/
 
 # custom
-.env
+/.env
