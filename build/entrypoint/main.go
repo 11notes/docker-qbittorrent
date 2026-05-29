@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"syscall"
 	"crypto/sha512"
   "encoding/base64"
 
