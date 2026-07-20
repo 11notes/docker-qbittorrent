@@ -39,5 +39,5 @@ func main(){
 	}
 
 	// start qbittorrent and replace process with it
-	eleven.Container.Run("/usr/local/bin", "qbittorrent", []string{"--profile=/opt"})
+	eleven.Container.Run("/usr/local/bin", "qbittorrent", []string{"--profile=/opt"}, []string{})
 }
