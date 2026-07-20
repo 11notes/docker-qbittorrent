@@ -804,7 +804,6 @@ jobs:
         if: steps.helm-artifact-download.outcome == 'success'
         run: |
           case "${{ matrix.registry }}" in
-            "docker.io") echo "${{ secrets.DOCKER_TOKEN }}" | helm registry login registry-1.docker.io -u "11notes" --password-stdin;;
             "ghcr.io") echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u "11notes" --password-stdin;;
             "quay.io") echo "${{ secrets.QUAY_TOKEN }}" | helm registry login quay.io -u "11notes+github" --password-stdin;;
           esac
@@ -813,14 +812,7 @@ jobs:
       - name: helm / push
         if: steps.helm-artifact-download.outcome == 'success'
         run: |
-          case "${{ matrix.registry }}" in
-            "docker.io")
-              helm push "${{ runner.temp }}/helm/chart.tgz" "oci://registry-1.${{ matrix.registry }}/11notes/charts"
-            ;;
-            *)
-              helm push "${{ runner.temp }}/helm/chart.tgz" "oci://${{ matrix.registry }}/11notes/charts"
-            ;;
-          esac
+          helm push "${{ runner.temp }}/helm/chart.tgz" "oci://${{ matrix.registry }}/11notes/charts"
  
 
   # ╔═════════════════════════════════════════════════════╗
