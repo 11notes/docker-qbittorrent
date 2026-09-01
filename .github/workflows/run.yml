@@ -31,22 +31,20 @@ jobs:
           ref: 'master'
           fetch-depth: 0
 
-      - name: get latest version and last tag
+      - name: get latest version and build
         run: |
-          LATEST_VERSION=$(curl -s https://api.github.com/repos/qbittorrent/qBittorrent/tags | jq -r ['.[].name | select(test("^release-[0-9]+"))'][0] | sed 's|release-||')
-          if [ "${LATEST_VERSION}" != "null" ]; then
-            if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/qbittorrent/tags/${LATEST_VERSION}; then
-              LATEST_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --max-count=1` | sed 's|v||')
-              echo "WORKFLOW_UPDATE_BASE64JSON=$(echo '{"version":"'${LATEST_VERSION}'", "tag":"'${LATEST_TAG}'", "unraid":true, "nobody":true}' | base64 -w 0)" >> "${GITHUB_ENV}"
-              echo "WORKFLOW_UPDATE=true" >> "${GITHUB_ENV}"
-            fi
-          fi
+          echo "LATEST_VERSION=$(curl -s https://api.github.com/repos/qbittorrent/qBittorrent/tags | jq -r ['.[].name | select(test("^release-[0-9]+"))'][0] | sed 's|release-||')" >> "${GITHUB_ENV}"
+
+      - name: check if updated is needed
+        uses: 11notes/actions/update@v1 # v1
+        with:
+          latest: ${{ env.LATEST_VERSION }}
 
       - name: call org.update
-        if: env.WORKFLOW_UPDATE == 'true'
-        uses: benc-uk/workflow-dispatch@7a027648b88c2413826b6ddd6c76114894dc5ec4 #v1.3.1
+        if: env.ACTIONS_UPDATE == 'true'
+        uses: benc-uk/workflow-dispatch@7a027648b88c2413826b6ddd6c76114894dc5ec4 # v1.3.1
         with:
           wait-for-completion: false
           workflow: org.update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "etc":"${{ env.WORKFLOW_UPDATE_BASE64JSON }}" }'
+          inputs: '{ "etc":"${{ env.ACTIONS_UPDATE_BASE64JSON }}" }'
