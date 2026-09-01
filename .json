@@ -25,5 +25,7 @@
         "qbittorrentofficial/qbittorrent-nox"
       ]
     }
-  }
+  },
+  "unraid": true,
+  "nobody": true
 }
