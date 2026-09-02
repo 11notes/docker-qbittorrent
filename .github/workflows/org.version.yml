@@ -29,10 +29,10 @@ jobs:
         with:
           version: ${{ github.event.inputs.version }}
 
-      - name: build container image
-        uses: benc-uk/workflow-dispatch@31e2b3319479a63f0ab15bf800eff9e913504e26 #v1.3.2
+      - name: build container images
+        uses: benc-uk/workflow-dispatch@7a027648b88c2413826b6ddd6c76114894dc5ec4 # v1.3.1
         with:
+          workflow: org.build.yml
           wait-for-completion: false
-          workflow: org.container.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "release":"false", "readme":"false", "run-name":"org.container build ${{ github.event.inputs.version }}", "etc":"${{ env.ACTIONS_VERSION_BASE64JSON }}" }'
+          inputs: '{ "ref":"master",  "release":"false", "readme":"false", "etc":"${{ env.ACTIONS_VERSION_BASE64JSON }}" }'
