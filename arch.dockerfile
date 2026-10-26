@@ -6,22 +6,17 @@
       APP_GID=1000 \
       QT_VERSION=6.9.2 \
       APP_OPENSSL_LTS_VERSION=0 \
-      APP_BOOST_VERSION=1.89.0 \
-      APP_ZLIB_VERSION=1.3.1 \
-      APP_LIBTORRENT_VERSION=2.0.11 \
-      APP_VUETORRENT_VERSION=2.30.1 \
+      APP_BOOST_VERSION=0 \
+      APP_ZLIB_VERSION=0 \
+      APP_LIBTORRENT_VERSION=0 \
+      APP_VUETORRENT_VERSION=0 \
       APP_GO_VERSION=0
 
 # :: FOREIGN IMAGES
-  # https://github.com/11notes/docker-distroless/blob/master/arch.dockerfile
   FROM 11notes/distroless AS distroless
-  # https://github.com/11notes/docker-distroless/blob/master/localhealth.dockerfile
   FROM 11notes/distroless:localhealth AS distroless-localhealth
-  # https://github.com/11notes/docker-distroless/blob/master/qt.dockerfile
   FROM 11notes/distroless:qt-minimal-${QT_VERSION} AS distroless-qt
-  # https://github.com/11notes/docker-util/blob/master/bin.dockerfile
   FROM 11notes/util:bin AS util-bin
-  # https://github.com/11notes/docker-util/blob/master/arch.dockerfile
   FROM 11notes/util AS util
 
 # ╔═════════════════════════════════════════════════════╗
