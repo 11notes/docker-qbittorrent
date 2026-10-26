@@ -1,0 +1,20 @@
+diff --git a/src/base/tagset.cpp b/src/base/tagset.cpp
+index 2691ba6..6f1aa25 100644
+--- a/src/base/tagset.cpp
++++ b/src/base/tagset.cpp
+@@ -31,8 +31,12 @@
+ 
+ bool TagLessThan::operator()(const Tag &left, const Tag &right) const
+ {
+-    const int result = m_compare(left.toString(), right.toString());
+-    if (result != 0)
++    const QString leftStr = left.toString();
++    const QString rightStr = right.toString();
++    if (const int result = m_compare(leftStr, rightStr); result != 0)
+         return (result < 0);
+-    return (m_subCompare(left.toString(), right.toString()) < 0);
++    if (const int result = m_subCompare(leftStr, rightStr); result != 0)
++        return (result < 0);
++    // Binary fallback guarantees a total order regardless of locale backend
++    return (QString::compare(leftStr, rightStr) < 0);
+ }

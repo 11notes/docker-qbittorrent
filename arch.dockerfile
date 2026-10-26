@@ -127,6 +127,13 @@
     sed -i 's|const auto USER_AGENT = QStringLiteral("qBittorrent/" QBT_VERSION_2);|const char *envUserAgent = getenv("QBITTORRENT_USER_AGENT"); const auto USER_AGENT = envUserAgent ? QString::fromUtf8(envUserAgent) : QStringLiteral("qBittorrent/" QBT_VERSION_2);|g' /qBittorrent/src/base/bittorrent/sessionimpl.cpp; \
     sed -i '1i #include <stdlib.h>' /qBittorrent/src/base/bittorrent/sessionimpl.cpp;
 
+  # PATCH EMOJI COMPATIBILITY WITHOUT ICU
+  COPY ./build/qBittorrent/ /qBittorrent
+  RUN set -ex; \
+    cd /qBittorrent; \
+    git apply --ignore-whitespace compare.patch; \
+    git apply --ignore-whitespace tagset.patch;
+
   RUN set -ex; \
     cd /qBittorrent; \
     QT_BASE_DIR="/opt/qt" \
