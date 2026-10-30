@@ -220,8 +220,8 @@
   VOLUME ["${APP_ROOT}/etc", "${APP_ROOT}/var", "${APP_ROOT}/themes"]
 
 # :: MONITORING
-  HEALTHCHECK --interval=5s --timeout=2s --start-period=5s \
-    CMD ["/usr/local/bin/localhealth", "http://127.0.0.1:8080/api/v2/app/version", "-I"]
+  HEALTHCHECK --interval=5s --timeout=2s --start-period=15s \
+    CMD ["/usr/local/bin/localhealth", "http://127.0.0.1:8080/api/v2/transfer/info", "-j", "connection_status=connected"]
 
 # :: EXECUTE
   USER ${APP_UID}:${APP_GID}
