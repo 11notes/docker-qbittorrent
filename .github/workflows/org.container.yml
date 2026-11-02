@@ -599,27 +599,10 @@ jobs:
           for TARGET in $(echo "${DOCKER_IMAGE_TAGS}" | tr ',' '\n' | while read -r REF; do strip_tag "${REF}"; done | sort -u); do
             DEST="docker://${TARGET}@${SRC_DIGEST}"
             echo "copying ${SRC} -> ${DEST}"
+            skopeo copy --all --preserve-digests "${SRC}" "${DEST}"
           done
 
           echo "digest=${SRC_DIGEST}" >> "$GITHUB_OUTPUT"
-
-      # PUSH IMAGE TO ALL REGISTRIES IF CLEAN
-      - name: container image / push to registries
-        id: image-push
-        if: env.WORKFLOW_BUILD == 'true'
-        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
-        with:
-          context: .
-          no-cache: ${{ env.WORKFLOW_BUILD_NO_CACHE }}
-          file: ${{ env.DOCKER_IMAGE_DOCKERFILE }}
-          push: true
-          sbom: true
-          provenance: mode=max
-          platforms: linux/${{ matrix.platform }}
-          cache-from: type=registry,ref=${{ env.DOCKER_CACHE_REGISTRY }}${{ env.DOCKER_CACHE_NAME }}
-          cache-to: type=registry,ref=${{ env.DOCKER_CACHE_NAME }},mode=max,compression=zstd,force-compression=true
-          build-args: |
-            ${{ env.DOCKER_IMAGE_ARGUMENTS }}
 
       # CREATE ATTESTATION ARTIFACTS
       - name: container image / create attestation artifacts
