@@ -600,7 +600,7 @@ jobs:
           for TARGET in $(echo "${DOCKER_IMAGE_TAGS}" | tr ',' '\n' | while read -r REF; do strip_tag "${REF}"; done | sort -u); do
             DEST="docker://${TARGET}@${SRC_DIGEST}"
             echo "copying ${SRC} -> ${DEST}"
-            skopeo copy --all --preserve-digests "${SRC}" "${DEST}"
+            skopeo copy --all --preserve-digests --src-tls-verify=false "${SRC}" "${DEST}"
           done
 
           echo "digest=${SRC_DIGEST}" >> "$GITHUB_OUTPUT"
