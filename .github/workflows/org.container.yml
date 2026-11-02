@@ -525,6 +525,8 @@ jobs:
           no-cache: ${{ env.WORKFLOW_BUILD_NO_CACHE }}
           file: ${{ env.DOCKER_IMAGE_DOCKERFILE }}
           push: true
+          sbom: true
+          provenance: mode=max
           platforms: linux/${{ matrix.platform }}
           cache-from: type=registry,ref=${{ env.DOCKER_CACHE_NAME }}
           cache-to: type=registry,ref=${{ env.DOCKER_CACHE_REGISTRY }}${{ env.DOCKER_CACHE_NAME }},mode=max,compression=zstd,force-compression=true
@@ -581,6 +583,26 @@ jobs:
           docker logs integration-main-1
           exit 1
 
+      - name: container image / push to registries (test)
+        if: env.WORKFLOW_BUILD == 'true'
+        env:
+          SRC_DIGEST: ${{ steps.image-build.outputs.digest }}
+        run: |
+          strip_tag() {
+            local n="${1%@*}"
+            [[ "${n##*/}" == *:* ]] && n="${n%:*}"
+            echo "${n}"
+          }
+
+          SRC="docker://$(strip_tag "${DOCKER_CACHE_GRYPE}")@${SRC_DIGEST}"
+
+          for TARGET in $(echo "${DOCKER_IMAGE_NAMES}" | tr ',' ' '); do   # your list of target repos
+            DEST="docker://$(strip_tag "${TARGET}")@${SRC_DIGEST}"
+            echo "copying ${SRC} -> ${DEST}"
+          done
+
+          echo "digest=${SRC_DIGEST}" >> "$GITHUB_OUTPUT"
+
       # PUSH IMAGE TO ALL REGISTRIES IF CLEAN
       - name: container image / push to registries
         id: image-push
@@ -598,8 +620,6 @@ jobs:
           cache-to: type=registry,ref=${{ env.DOCKER_CACHE_NAME }},mode=max,compression=zstd,force-compression=true
           build-args: |
             ${{ env.DOCKER_IMAGE_ARGUMENTS }}
-          tags: |
-            ${{ env.DOCKER_IMAGE_TAGS }}
 
       # CREATE ATTESTATION ARTIFACTS
       - name: container image / create attestation artifacts
